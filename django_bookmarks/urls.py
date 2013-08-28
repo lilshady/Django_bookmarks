@@ -41,4 +41,5 @@ urlpatterns = patterns('',
 	#and $.browser is deleted since jquery 1.9, we need a migrated js
 	(r'^save/ajax/tag/autocomplete/$',ajax_tag_autocomplete),
 	(r'^vote/$',bookmark_vote_page),
+	(r'^popular/$',popular_page),
 )
