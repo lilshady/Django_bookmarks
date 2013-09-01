@@ -45,3 +45,9 @@ ul .bookmarks .edit
 {
 font-size: 70%
 }
+
+.comment{
+	margin: 1em;
+	padding: 5px;
+	border:  1px solid #000;
+}

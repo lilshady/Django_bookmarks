@@ -42,4 +42,6 @@ urlpatterns = patterns('',
 	(r'^save/ajax/tag/autocomplete/$',ajax_tag_autocomplete),
 	(r'^vote/$',bookmark_vote_page),
 	(r'^popular/$',popular_page),
+	(r'^comments/',include('django.contrib.comments.urls')),
+	(r'^bookmark/(\d+)/$',bookmark_page),
 )
