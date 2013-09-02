@@ -6,8 +6,8 @@ sys.path.append("D:\\django_bookmarks")
 from bookmarks.views import *
 site_media = os.path.join(os.path.dirname(__file__),'site_media')
 # Uncomment the next two lines to enable the admin:
-# from django.contrib import admin
-# admin.autodiscover()
+from django.contrib import admin
+admin.autodiscover()
 
 urlpatterns = patterns('',
     # Examples:
@@ -18,7 +18,7 @@ urlpatterns = patterns('',
     # url(r'^admin/doc/', include('django.contrib.admindocs.urls')),
 
     # Uncomment the next line to enable the admin:
-    # url(r'^admin/', include(admin.site.urls)),
+    url(r'^admin/', include(admin.site.urls)),
 	#Browsing
 	(r'^$',main_page),
 	(r'^user/(\w+)/$',user_page),
