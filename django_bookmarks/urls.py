@@ -2,13 +2,15 @@ from django.conf.urls import patterns, include, url
 import sys
 import os.path
 from django.views.generic import TemplateView
-sys.path.append("D:\\django_bookmarks")
+sys.path.append("F:\\Dropbox\\django_bookmarks")
 from bookmarks.views import *
+from bookmarks.feeds import *
 site_media = os.path.join(os.path.dirname(__file__),'site_media')
 # Uncomment the next two lines to enable the admin:
 from django.contrib import admin
 admin.autodiscover()
 
+feeds = {'recent': RecentBookmarks}
 urlpatterns = patterns('',
     # Examples:
     # url(r'^$', 'django_bookmarks.views.home', name='home'),
@@ -44,4 +46,8 @@ urlpatterns = patterns('',
 	(r'^popular/$',popular_page),
 	(r'^comments/',include('django.contrib.comments.urls')),
 	(r'^bookmark/(\d+)/$',bookmark_page),
+	#Feeds
+	#(r'^feeds/(?P<url>.*)/$','django.contrib.syndication.views.Feed',{'feed_dict':feeds}),
+	#(r'^feeds/recent/$',RecentBookmarks()),
+	(r'^feeds/(?P<url>.*)/$', RecentBookmarks()),
 )
