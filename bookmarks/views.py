@@ -57,9 +57,9 @@ def _bookmark_save(request,form):
         bookmark.tag_set.add(tag)
     if form.cleaned_data['share']:
         shared_bookmark,created = SharedBookmark.objects.get_or_create(bookmark=bookmark)
-    if created:
-        shared_bookmark.user_voted.add(request.user)
-        shared_bookmark.save()
+        if created:
+            shared_bookmark.user_voted.add(request.user)
+            shared_bookmark.save()
     bookmark.save()
     return bookmark
 	

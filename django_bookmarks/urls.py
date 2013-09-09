@@ -10,7 +10,7 @@ site_media = os.path.join(os.path.dirname(__file__),'site_media')
 from django.contrib import admin
 admin.autodiscover()
 
-feeds = {'recent': RecentBookmarks}
+#feeds = {'recent': RecentBookmarks,'user':UserBookmarks}
 urlpatterns = patterns('',
     # Examples:
     # url(r'^$', 'django_bookmarks.views.home', name='home'),
@@ -49,5 +49,9 @@ urlpatterns = patterns('',
 	#Feeds
 	#(r'^feeds/(?P<url>.*)/$','django.contrib.syndication.views.Feed',{'feed_dict':feeds}),
 	#(r'^feeds/recent/$',RecentBookmarks()),
-	(r'^feeds/(?P<url>.*)/$', RecentBookmarks()),
+	#(r'^feeds/(?P<url>.*)/$', RecentBookmarks()),
+	#(r'^feeds/user/$',  UserBookmarks()),
+	(r'^feeds/recent/$', RecentBookmarks()),
+	#(?P<user>\w+):assign the value to the keyword argument user
+	(r'^feeds/user/(?P<user>\w+)/$',  UserBookmarks()),
 )
