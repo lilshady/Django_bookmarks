@@ -19,12 +19,35 @@ def main_page(request):
 	  'main_page.html',variables)
 	
 
-
+from django.core.paginator import *
+ITEMS_PER_PAGE = 5
 def user_page(request,username):
     user = get_object_or_404(User,username=username)
-    bookmarks = user.bookmark_set.order_by('-id')
-    variables = RequestContext(request,{'bookmarks':bookmarks,'username':username,'show_tags':True,'show_edit':username == request.user.username})
+    query_set = user.bookmark_set.order_by('-id')
+    paginator = Paginator(query_set,ITEMS_PER_PAGE)
+    bookmarks = []
+    try:
+        page = int(request.GET['page'])
+    except:
+        page = 1
+    try:
+        page_items = paginator.page(page)
+        bookmarks = page_items
+    except:
+        raise Http404
+    variables = RequestContext(request,{'bookmarks':bookmarks,'username':username,'show_tags':True,'show_edit':username == request.user.username,
+        'show_paginator':paginator._get_num_pages() > 1,
+        'has_prev':page_items.has_previous(),
+        'has_next':page_items.has_next(),
+        'page':page,
+        'pages':paginator._get_num_pages(),
+        'next_page':page+1,
+        'prev_page':page-1
+        })
     return render_to_response('user_page.html',variables)
+
+
+
 def logout_page(request):
     logout(request)
     return HttpResponseRedirect('/')
@@ -123,7 +146,8 @@ def tag_cloud_page(request):
         tag.weight = int(MAX_WEIGHT * (tag.count - min_count) / range)
     variables = RequestContext(request,{'tags':tags})
     return render_to_response('tag_cloud_page.html',variables)
- 
+
+from django.db.models import Q 
 def search_page(request):
     form = SearchForm()
     bookmarks = []
@@ -132,8 +156,12 @@ def search_page(request):
         show_results = True
         query = request.GET['query'].strip()
         if query:
+            keywords = query.split()
+            q = Q()
+            for keyword in keywords:
+                q = q & Q(title__icontains=keyword)
             form = SearchForm({'query' : query})
-            bookmarks = Bookmark.objects.filter(title__icontains=query)[:10]
+            bookmarks = Bookmark.objects.filter(q)[:10]
     variables = RequestContext(request,{'form':form,'bookmarks':bookmarks,'show_results':show_results,'show_tags':True,'show_user':True})
     if request.GET.has_key('ajax'):
         return render_to_response('bookmark_list.html',variables)
