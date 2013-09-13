@@ -55,4 +55,5 @@ urlpatterns = patterns('',
 	#(?P<user>\w+):assign the value to the keyword argument user
 	(r'^feeds/user/(?P<user>\w+)/$',  UserBookmarks()),
 	(r'^friends/(\w+)/$',friends_page),
+	(r'^friend/add/$',friend_add),
 )
