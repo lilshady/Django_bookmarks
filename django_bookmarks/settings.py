@@ -159,5 +159,11 @@ LOGGING = {
         },
     }
 }
-#new in 1.0 just need this, notimport django.contrib.auth django.contrib.auth.LOGIN_URL='/login/'
+#new in 1.0 just need this, not import django.contrib.auth django.contrib.auth.LOGIN_URL='/login/'
 LOGIN_URL='/login/'
+SITE_HOST = '127.0.0.1:8000'
+DEFAULT_FROM_EMAIL= 'Django Bookmarks <interlu1990@163.com>'
+EMAIL_HOST = 'smtp.163.com'
+EMAIL_PORT='25'
+EMAIL_HOST_USER = 'interlu1990'
+EMAIL_HOST_PASSWORD='1990730'

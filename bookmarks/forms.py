@@ -38,3 +38,9 @@ class BookmarkSaveForm(forms.Form):
     share = forms.BooleanField(label = 'Shared on the main page',required=False)
 class SearchForm(forms.Form):
     query = forms.CharField(label='Enter a keyword to search for',widget=forms.TextInput(attrs={'size':32}))
+
+
+class FriendInviteForm(forms.Form):
+    name = forms.CharField(label='Friend\'s Name')
+    email = forms.EmailField(label='Friend\'s Email')
+
