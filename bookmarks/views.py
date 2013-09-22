@@ -10,6 +10,8 @@ from django.contrib.auth import logout
 from bookmarks.forms import *
 from bookmarks.models import *
 from django.contrib.auth.decorators import login_required
+from django.contrib import messages
+
 def main_page(request):
     shared_bookmarks = SharedBookmark.objects.order_by(
        '-date'
@@ -63,11 +65,19 @@ def register_page(request):
             password = form.cleaned_data['password1'],
             email = form.cleaned_data['email']
             )
+            if 'invitation' in request.session:
+                invitation = Invitation.objects.get(id=request.session['invitation'])
+                friendship = Friendship(from_friend=user,to_friend=invitation.sender)
+                friendship.save()
+                friendship = Friendship(from_friend=invitation.sender,to_friend=user)
+                friendship.save()
+                invitation.delete()
+                del request.session['invitation']
             return HttpResponseRedirect('/register/success/')
     else:
         form = RegistrationForm()
-        variables = RequestContext(request,{'form':form})
-        return render_to_response('registration/register.html',variables)
+    variables = RequestContext(request,{'form':form})
+    return render_to_response('registration/register.html',variables)
 		
 		
 def _bookmark_save(request,form):
@@ -229,7 +239,11 @@ def friend_add(request):
           get_object_or_404(User,username=request.GET['username'])
         friendship = Friendship(from_friend=request.user,
             to_friend=friend)
-        friendship.save()
+        try:
+            friendship.save()
+            messages.success(request, '%s was added to your friend list.' %friend.username)
+        except:
+            messages.error(request, '%s is already a friend of yours.' %friend.username)
         return HttpResponseRedirect(
            '/friends/%s/' %request.user.username
             )
@@ -248,9 +262,20 @@ def friend_invite(request):
                sender = request.user
                 )
         invitation.save()
-        invitation.send()
+        try:
+            invitation.send()
+            messages.success(request, message='An invitation was sent to %s.' %invitation.email)
+            #request.user.message_set.create(message='An invitation was sent to %s.' %invitation.email)
+        except:
+            messages.error(request, 'There was an error while sending te invitation.')
+            #request.user.message_set.create(message='There was an error while sending te invitation.')
         return HttpResponseRedirect('/friend/invite/')
     else:
         form = FriendInviteForm()
     variables = RequestContext(request,{'form':form})
     return render_to_response('friend_invite.html',variables)
+
+def friend_accept(request,code):
+    invitation = get_object_or_404(Invitation,code__exact=code)
+    request.session['invitation'] = invitation.id
+    return HttpResponseRedirect('/register/')
