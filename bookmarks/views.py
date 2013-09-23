@@ -11,6 +11,7 @@ from bookmarks.forms import *
 from bookmarks.models import *
 from django.contrib.auth.decorators import login_required
 from django.contrib import messages
+from django.utils.translation import gettext as _
 
 def main_page(request):
     shared_bookmarks = SharedBookmark.objects.order_by(
@@ -264,10 +265,10 @@ def friend_invite(request):
         invitation.save()
         try:
             invitation.send()
-            messages.success(request, message='An invitation was sent to %s.' %invitation.email)
+            messages.success(request, message=_('An invitation was sent to %s.') %invitation.email)
             #request.user.message_set.create(message='An invitation was sent to %s.' %invitation.email)
         except:
-            messages.error(request, 'There was an error while sending te invitation.')
+            messages.error(request, _('There was an error while sending te invitation.'))
             #request.user.message_set.create(message='There was an error while sending te invitation.')
         return HttpResponseRedirect('/friend/invite/')
     else:
