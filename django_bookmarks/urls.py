@@ -58,4 +58,5 @@ urlpatterns = patterns('',
 	(r'^friend/add/$',friend_add),
 	(r'^friend/invite/$',friend_invite),
 	(r'friend/accept/(\w+)/$',friend_accept),
+	(r'^i18n/',include('django.conf.urls.i18n')),
 )

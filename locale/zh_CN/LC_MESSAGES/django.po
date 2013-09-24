@@ -8,43 +8,48 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2013-09-23 22:03+0800\n"
+"POT-Creation-Date: 2013-09-24 20:52+0800\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
 
 #: .\bookmarks\forms.py:45
 msgid "Friend's Name"
-msgstr ""
+msgstr "朋友姓名"
 
 #: .\bookmarks\forms.py:46
 msgid "Friend's Email"
-msgstr ""
+msgstr "朋友邮件"
 
 #: .\bookmarks\views.py:268
 #, python-format
 msgid "An invitation was sent to %s."
-msgstr ""
+msgstr "邀请信被发送至 %s"
 
 #: .\bookmarks\views.py:271
 msgid "There was an error while sending te invitation."
-msgstr ""
+msgstr "发送出现错误"
 
 #: .\templates\friend_invite.html.py:3 .\templates\friend_invite.html.py:4
 msgid "Invite A Friend"
-msgstr ""
+msgstr "邀请朋友"
 
-#: .\templates\friend_invite.html.py:11
+#: .\templates\friend_invite.html.py:6
+msgid "Enter your friend name and email below"
+msgstr "输入朋友姓名和邮箱"
+
+#: .\templates\friend_invite.html.py:10
 msgid "send invite"
-msgstr ""
+msgstr "发送 邀请"
 
 #: .\templates\admin\base_site.html.py:4
 msgid "Django Bookmarks site admin"
-msgstr ""
+msgstr "Django Bookmarks 站点管理"
 
 #: .\templates\admin\base_site.html.py:7
 msgid "Django Bookmarks administration"
-msgstr ""
+msgstr "Django Bookmarks 管理"
