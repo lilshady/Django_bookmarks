@@ -12,7 +12,7 @@ from bookmarks.models import *
 from django.contrib.auth.decorators import login_required
 from django.contrib import messages
 from django.utils.translation import gettext as _
-
+from django.views.decorators.cache import cache_page
 def main_page(request):
     shared_bookmarks = SharedBookmark.objects.order_by(
        '-date'
@@ -141,7 +141,7 @@ def tag_page(request,tag_name):
     variables = RequestContext(request,{'bookmarks':bookmarks,'tag_name':tag_name,'show_tags':True,'show_user':True})
     return render_to_response('tag_page.html',variables)
 
-	
+@cache_page(60*5)
 def tag_cloud_page(request):
     MAX_WEIGHT = 5
     tags = Tag.objects.order_by('name')
